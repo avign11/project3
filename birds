@@ -1,0 +1,67 @@
+//Nanette Avignone CST112
+//Project 2
+
+float x, y;
+float horizon;
+
+//Bird black;
+
+
+///SETUP///
+void setup() {
+  size (700, 700);
+  x=0;
+  y=0;
+  horizon=height/3; 
+
+ // black= new Bird();
+}
+
+void draw() {
+  scene();
+  //black.show();
+} 
+
+
+//SCENE//
+void scene() {
+  stroke ( 0, 0, 0 );
+  background ( 0, 75, 255 );          //sky            
+  fill ( 0, 255, 0 );
+  rect ( x, horizon, width, 600 );    //green ground  
+  fill (165, 42, 42 );                //tree trunk       
+  rect  ( 450, horizon-50, 20, 50);
+  fill (0, 127, 0 );                  //tree leaves        
+  ellipse ( 460, horizon-80, 60, 60 );
+  fill (165, 42, 42 );                   //brown roof house      
+  triangle ( 100, horizon-100, 200, horizon-150, 300, horizon-100 );   
+  fill ( 50, 50, 200 );                                               //blue base house
+  rect (125, horizon-100, 150, 100 );                  
+  fill ( 255, 0, 0 );                                                 //red door
+  rect ( 160, horizon-50, 35, 50 );                     
+  fill (0, 0, 0 );
+  ellipse( 170, horizon-25, 5, 5 );                                   //door knob
+  fill ( 255, 255, 255 );                                             //windows
+  rect (220, horizon-75, 35, 35 );
+  line (238, horizon-75, 238, horizon-40 );
+  line (220, horizon-57, 255, horizon-57 );
+}  
+
+
+//class Bird {
+  float x = 0, y = 0;
+  float dx= 2, dy = 4;
+
+  //Display birds
+  void show() {  
+
+    fill (0, 0, 0);
+    stroke (0, 0, 0);
+
+    while (x < width) {
+      ellipse ( x+275, y+75, 40, 10);        //body
+      ellipse ( x+295, y+73, 10, 10 );       //head
+      triangle ( x+260, y+75, x+290, y+75, x+275, y+90);   //wing
+    }
+  }
+}// End class Bird
