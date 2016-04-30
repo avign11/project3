@@ -1,0 +1,34 @@
+//Nanette Avignone CST112
+//Project 2
+
+float x, y;
+int spacing = 60;
+
+///SETUP///
+void setup() {
+  size (700, 500);
+  x=0;
+  y=0;
+  width = 700;
+  background ( 0, 75, 255 );              //sky 
+  }
+
+
+void draw() {
+  scene();
+} 
+
+
+//SCENE//
+void scene() {
+  
+ 
+  fill (0, 0, 0);
+  stroke (0, 0, 0);
+ while (x <= width) {
+       ellipse ( x+50, y+50, 40, 10);        //body
+     ellipse ( x+70, y+47, 10, 10 );       //head
+     triangle ( x+35, y+50, x+65, y+50, x+50, y+70);   //wing
+   x = x + spacing;
+  }
+}
