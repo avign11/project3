@@ -1,0 +1,296 @@
+//Nanette Avignone CST112
+//Project 2
+
+float x, y;
+float horizon;
+float xSun, ySun;
+int score=0;
+
+
+Nugget gold;
+Hero sam;
+Monster bumble;
+Dog clifford;
+Pup blue;
+Bird black;
+
+
+///SETUP///
+void setup() {
+  size (700, 700);  
+  x=0;
+  y=0;
+  horizon=height/3;
+  xSun=  width/2;                  // Reset the sun position.
+  ySun=  100; 
+  //
+  sam= new Hero();
+  gold= new Nugget();
+  clifford= new Dog();
+  blue= new Pup();
+  bumble= new Monster();
+  black= new Bird();
+}
+
+void draw() {
+  scene();
+  movesun();
+  message();
+  reset ();  
+  sam.move();
+  sam.show();  
+  gold.show();
+  clifford.show();
+  blue.show();
+  bumble.show();
+  black.show();
+} 
+
+
+//SCENE//
+void scene() {
+  stroke ( 0, 0, 0 );
+  background ( 0, 75, 255 );          //sky            
+  fill ( 0, 255, 0 );
+  rect ( x, horizon, width, 600 );    //green ground
+  fill (255, 255, 0 );
+  ellipse( xSun, ySun, 50, 50 );      //sun
+  fill (165, 42, 42 );                //tree trunk       
+  rect  ( 450, horizon-50, 20, 50);
+  fill (0, 127, 0 );                  //tree leaves        
+  ellipse ( 460, horizon-80, 60, 60 );
+  fill (165, 42, 42 );                   //brown roof house      
+  triangle ( 100, horizon-100, 200, horizon-150, 300, horizon-100 );   
+  fill ( 50, 50, 200 );                                               //blue base house
+  rect (125, horizon-100, 150, 100 );                  
+  fill ( 255, 0, 0 );                                                 //red door
+  rect ( 160, horizon-50, 35, 50 );                     
+  fill (0, 0, 0 );
+  ellipse( 170, horizon-25, 5, 5 );                                   //door knob
+  fill ( 255, 255, 255 );                                             //windows
+  rect (220, horizon-75, 35, 35 );
+  line (238, horizon-75, 238, horizon-40 );
+  line (220, horizon-57, 255, horizon-57 );
+  fill (0, 0, 0);
+  stroke (0, 0, 0);
+ while (x <= width) {
+       ellipse ( x+50, y+50, 40, 10);        //body
+     ellipse ( x+70, y+47, 10, 10 );       //head
+     triangle ( x+35, y+50, x+65, y+50, x+50, y+70);   //wing
+   x = x + spacing;
+  }
+}  
+
+
+//MOVE SUN
+void movesun () {                     // move sun across sky
+  xSun=  xSun + 1;
+  if (xSun > width) xSun=  0;
+}
+
+
+//MESSAGES: title and author 
+void message() {
+  fill(255, 255, 255);
+  text ("Hero chases gold", 10, 20 );
+  fill (0);
+  text ("Nanette, CST112", 10, height -10 );
+  text ("SCORE =" +score, 410, height -10 );
+}
+
+
+//Reset score
+void reset() {                        
+  if ( score >= 1000 ) 
+    score = 0;
+}
+
+
+//// EVENTS ////
+
+//MOVE GOLD  when mouse clicked.
+void mousePressed() {
+  gold.x = mouseX;
+  gold.y = mouseY;
+}
+
+
+
+
+//// CLASS DEFINITIONS ////
+class Nugget {
+
+  float x = random (50, width-50);
+  float y = random (horizon+50, height-50);
+
+  //Display the gold
+  void show() {
+    stroke (255, 255, 0 );
+    fill (255, 255, 0 );   
+    triangle ( x, y, x+25, y, x+15, y+15 );    
+    stroke (255, 255, 0 );
+    fill (255, 255, 0 );    
+    triangle ( x, y+10, x+25, y+10, x+15, y-10 );
+  }
+} //End class Nugget
+
+class Hero {
+  float x = 0, y = 0;
+  float dx= 2, dy = 4;
+
+  //Display Hero
+  void show() {
+    fill ( 250, 50, 250 );                                        //body
+    rect (x+25, y+100, 80, 80 );
+    fill (0);                                                     //name
+    text ("SAM", x+50, y+150 );    
+    fill ( 204, 0, 204 );                                         //head
+    ellipse (x+65, y+70, 60, 60 );
+    fill ( 204, 0, 204 );                                         //left leg
+    ellipse ( x+45, y+185, 20, 10 );
+    fill ( 204, 0, 204 );                                         //right leg
+    ellipse ( x+85, y+185, 20, 10 );
+    fill ( 255, 255, 255 );                                       //left eye
+    ellipse ( x+50, y+70, 10, 20 );
+    fill ( 255, 255, 255 );                                       //right eye
+    ellipse ( x+80, y+70, 10, 20 );
+    fill ( 0, 0, 0 );                                            //left pupil
+    ellipse ( x+50, y+70, 5, 5 );
+    fill ( 0, 0, 0 );                                             //right pupil
+    ellipse ( x+80, y+70, 5, 5 );
+  }
+  //Move Hero to gold
+  void move() {
+    dx=  (gold.x -x) / 30;    //Go to the gold
+    dy=  (gold.y -y) / 30;   
+    x=  x + dx;               //Move him
+    y=  y + dy;
+
+    // Check for gold nearby
+
+    if (dist(x, y, gold.x, gold.y) < 10) { 
+
+      gold.x=  random( 0, width );             // Check for gold nearby
+      gold.y=  random( horizon, height );
+      score=  score + 100;
+    }
+  }
+}//End class Hero//
+
+
+
+class Dog {
+  float x = 0, y = 0;
+  float dx= 2, dy = 4;
+
+  //Display Dog
+  void show() { 
+    stroke ( 255, 0, 0 );
+    fill ( 255, 0, 0 );  
+    rect ( x+300, y+300, 100, 50 );
+    fill (0);
+    text ("Clifford", 335, 330 );
+    stroke ( 255, 0, 0 );
+    fill ( 255, 0, 0 );
+    rect ( x+375, y+300, 50, -25 );  
+    stroke (0);
+    strokeWeight (2); 
+    fill (0, 200, 0 );
+    ellipse ( x+410, 285, 10, 10 );
+    stroke (0);
+    strokeWeight (3);
+    line ( x+300, y+300, x+275, y+275 );
+    line ( x+325, y+350, x+325, y+370 );
+    line ( x+385, y+350, x+385, y+370 );
+  }
+
+  /*
+    frameRate = 20;
+   x = x + dx;
+   */
+}//End class Dog//
+
+class Pup {
+  float x = 0, y = 0;
+  float dx= 2, dy = 4; 
+
+
+  // Display Pup
+  void show() {
+    stroke ( 0, 0, 255 );
+    fill ( 0, 0, 255 );
+    rect ( x+100, y+450, 80, 35 );
+    fill (0);
+    text ("Blue", 125, 475 );
+    stroke ( 0, 0, 255 );
+    fill ( 0, 0, 255 );
+    rect ( x+150, y+450, 40, -15 );  
+    stroke (0);
+    strokeWeight (2); 
+    fill ( 255, 192, 203 );
+    ellipse ( x+180, y+442, 8, 8 );
+    stroke (0);
+    strokeWeight (3);
+    line ( x+100, y+450, x+75, y+435 );
+    line ( x+115, y+485, x+115, y+505 );
+    line ( x+170, y+485, x+170, y+505 );
+    strokeWeight (1);
+  }
+}//End class Pup
+
+
+class Monster {
+  float x = 0, y = 0;
+  float dx= 2, dy = 4;
+
+
+  //Display monster snowman
+  void show() {     
+    fill ( 255, 255, 255 );
+    stroke ( 255, 255, 255 );
+    ellipse( x+100, y+300, 50, 50);      //head
+    fill ( 255, 255, 255 );
+    stroke ( 255, 255, 255 );
+    ellipse( x+100, y+350, 60, 60 );     //middle
+    fill (0);                            //name
+    text ("BUMBLE", x+75, y+345 );  
+    fill ( 255, 255, 255 );
+    stroke ( 255, 255, 255 );
+    ellipse( x+100, y+400, 70, 70);      //bottom
+    fill (0, 0, 0 );
+    ellipse( x+100, y+350, 7, 7 );       //top button
+    fill (0, 0, 0 );
+    ellipse( x+100, y+375, 7, 7 );      // middle button
+    fill (0, 0, 0 );
+    ellipse( x+100, y+400, 7, 7 );      //bottom button
+    fill (0, 0, 0 );
+    ellipse( x+95, y+295, 7, 7);        // left eye
+    fill (0, 0, 0 );
+    ellipse( x+105, y+295, 7, 7);       //right eye
+    fill (0, 0, 0 );
+    ellipse( x+100, y+305, 5, 5);       //mouth
+    fill (0, 0, 0 );
+    ellipse( x+105, y+308, 5, 5);  
+    fill (0, 0, 0 );
+    ellipse( x+95, y+308, 5, 5);
+  }
+}//End class Monster
+
+
+class Bird {
+  float x = 50, y = 50;
+  float dx= 2, dy = 4;
+  int spacing = 60;
+
+  //Display birds
+  void show() {    
+    fill (0, 0, 0);
+    stroke (0, 0, 0);
+    while (x <= width) {
+      ellipse ( x, y, 40, 10);        //body
+      ellipse ( x+20, y-3, 10, 10 );       //head
+      triangle ( x-15, y, x+15, y, x, y+20);   //wing
+      x = x + spacing;
+    }
+  }
+}
