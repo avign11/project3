@@ -1,5 +1,5 @@
 //Nanette Avignone CST112
-//Project 2
+//Project 3
 
 float x, y;
 float horizon;
@@ -85,8 +85,8 @@ void movesun () {                     // move sun across sky
 
 //MESSAGES: title and author 
 void message() {
-  fill(255, 255, 255);
-  text ("Hero chases gold", 10, 20 );
+  fill(0, 0, 0);
+  text ("Project 3", 10, 20 );
   fill (0);
   text ("Nanette Avignone, CST112", 10, height -10 );
   if ( score >= 1000 )     score = 0;
