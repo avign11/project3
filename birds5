@@ -1,0 +1,51 @@
+float x, y;
+int flap;
+
+
+///SETUP///
+void setup() {
+  size (700, 500);
+  x=0;
+  y=0;
+  width = 700;
+}
+
+
+void draw() {
+  scene();
+  movebird();
+  bird();
+} 
+
+
+//SCENE//
+void scene() {
+  background ( 0, 75, 255 );    //sky
+}
+
+
+
+void bird() { 
+  fill (0, 0, 0);  
+  stroke (0, 0, 0);
+  ellipse ( x+50, y+50, 40, 10);        //body
+  ellipse ( x+70, y+47, 10, 10 );       //head
+  //triangle ( x+35, y+50, x+65, y+50, x+50, y+70);   //wing
+  triangle ( x+35, y+50, x+65, y+50, x+50, y+flap);   //wing
+  if (x>0) { 
+    flap=25;
+  }
+  if (x<200) { 
+    flap=70;
+  } 
+}
+
+
+
+
+  //MOVE SUN
+  void movebird () {
+    x=  x + 1;
+    if (x > width) x= 0;
+  }
+
